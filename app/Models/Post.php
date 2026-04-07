@@ -17,7 +17,7 @@ class Post extends Model
     public function scopeScheduled($query)
     {
         return $query->where('is_draft', false)
-            ->where('publish_at', '>', now());
+            ->where('published_at', '>', now());
     }
 
     public function user()

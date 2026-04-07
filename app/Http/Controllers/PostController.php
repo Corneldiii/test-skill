@@ -33,7 +33,7 @@ class PostController extends Controller
             return redirect('/login');
         }
 
-        return 'posts.create';
+        return view('posts.create');
     }
 
     /**
@@ -54,10 +54,7 @@ class PostController extends Controller
 
         $post = Post::create($validated);
 
-        return response()->json([
-            'message' => 'Post created',
-            'post' => $post,
-        ], 201);
+        return new PostResource($post);
     }
 
     /**
@@ -69,9 +66,7 @@ class PostController extends Controller
             abort(404);
         }
 
-        return response()->json([
-            'data' => $post->load('user'),
-        ]);
+        return new PostResource($post->load('user'));
     }
 
     /**
@@ -81,7 +76,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        return 'posts.edit';
+        return view('posts.create');
     }
 
     /**
@@ -100,10 +95,7 @@ class PostController extends Controller
 
         $post->update($validated);
 
-        return response()->json([
-            'message' => 'Post updated',
-            'post' => $post,
-        ]);
+        return new PostResource($post);
     }
 
     /**
