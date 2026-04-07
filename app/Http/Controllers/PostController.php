@@ -29,11 +29,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        if (! Auth::check()) {
-            return redirect('/login');
-        }
+        $this->authorize('create', Post::class);
 
-        return view('posts.create');
+        return 'posts.create';
     }
 
     /**
@@ -76,7 +74,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        return view('posts.create');
+        return 'posts.edit';
     }
 
     /**
