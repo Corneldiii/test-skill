@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'content',
+        'is_draft',
+        'published_at',
+    ];
+
     public function scopeActive($query)
     {
         return $query->where('is_draft', false)
@@ -24,6 +32,4 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    use HasFactory;
 }

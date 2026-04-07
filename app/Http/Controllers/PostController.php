@@ -29,8 +29,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Post::class);
-
         return 'posts.create';
     }
 
@@ -39,7 +37,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Post::class);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -52,7 +49,7 @@ class PostController extends Controller
 
         $post = Post::create($validated);
 
-        return new PostResource($post);
+        return (new PostResource($post->load('user')))->response()->setStatusCode(201);
     }
 
     /**
